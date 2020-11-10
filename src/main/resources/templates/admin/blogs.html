@@ -127,7 +127,7 @@
 
 
 
-    <footer th:replace="_fragments :: footer" class = "ui inverted vertical segment">
+    <footer th:replace="admin/_fragments :: footer" class = "ui inverted vertical segment">
         <div class = "ui container">
             <div class = "ui grid">
                 <div class="three wide column">
@@ -146,10 +146,10 @@
 
 
 
-    <th:block th:replace="_fragments :: script">
+    <th:block th:replace="admin/_fragments :: script">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        <script src="../static/libtocbot/tocbot.min.js"></script>
+        <script src="../../static/libtocbot/tocbot.min.js"></script>
 
     </th:block>
 
