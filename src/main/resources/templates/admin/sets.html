@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
+<head th:replace="admin/_fragments :: head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>管理员主页</title>
+    <title>文集</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <link rel="stylesheet" href="../static/css/m.css">
+    <link rel="stylesheet" href="../../static/css/m.css">
 
 </head>
 <body>
@@ -18,7 +18,7 @@
                 <a herf = "#" class = "m-hidden-button item m-mobile-hidden"><i class = "idea icon"></i>文集</a>
                 <a herf = "#" class = "m-hidden-button item m-mobile-hidden"><i class = "tags icon"></i>标签</a>
 
-                <div class="right menu">
+                <div class="right item menu m-mobile-hidden">
                     <div class="ui dropdown item">
                         <input type="hidden" name="user">
                         <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">Apray
@@ -49,15 +49,54 @@
     </div>
 
     <div class="ui container m-padding-horizon-2 m-padding-vertical-2">
-            <div class="ui success message">
-                <h2>登陆成功！</h2>
-            </div>
-        <br>
-        <br>
+        <div class = "ui success message" th:unless="${#strings.isEmpty(message)}">
+            <i class="close icon"></i>
+            <div class="header">提示:</div>
+            <p th:text="${message}">操作成功。</p>
+        </div>
+
+        <table class="ui table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>文集名称</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="set, iterStat: ${page.content}">
+                    <td th:text="${iterStat.count}"></td>
+                    <td th:text="${set.name}">文集1</td>
+                    <td>
+                        <a href="#" th:href="@{/admin/sets/{id}/input(id=${set.id})}" class="ui mini teal basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/sets/{id}/delete(id=${set.id})}" class="ui mini red basic button">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="6">
+                        <div class="ui mini pagination menu" th:if="${page.totalPages} > 1">
+                        <a th:href="@{/admin/sets(page=${page.number} - 1)}" class="item" th:unless="${page.first}"><<</a>
+                        <a th:href="@{/admin/sets(page=${page.number} + 1)}" class="item" th:unless="${page.last}">>></a>
+                        </div>
+                        <a href="#" th:href="@{/admin/sets/input}" class="ui right floated teal basic button">新增</a>
+                    </th>
+                </tr>
+            </tfoot>
+
+
+
+            
+        </table>
+
+
+
     </div>
 
 
-    <footer class = "ui inverted vertical segment">
+
+    <footer th:replace="admin/_fragments :: footer" class = "ui inverted vertical segment">
         <div class = "ui container">
             <div class = "ui grid">
                 <div class="three wide column">
@@ -73,13 +112,17 @@
             </div>
         </div>
     </footer>
-    <th:block th:fragment="script">
+
+
+
+    <th:block th:replace="admin/_fragments :: script">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        <script src="../static/libtocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
-
+        <script src="../../static/libtocbot/tocbot.min.js"></script>
 
     </th:block>
+
+
     <script>
         $('.menu.toggle').click(function(){
             $('.m-hidden-button').toggleClass('m-mobile-hidden');
@@ -87,6 +130,12 @@
 
         $('.ui.dropdown').dropdown({
             on : 'hover'
+        });
+        $('.message .close')
+        .on('click', function(){
+            $(this).
+            closest('.message')
+            .transition('fade');
         });
     </script>
 </body>

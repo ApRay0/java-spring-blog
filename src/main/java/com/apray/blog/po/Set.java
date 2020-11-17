@@ -1,5 +1,7 @@
 package com.apray.blog.po;
 
+import org.springframework.lang.NonNull;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,8 @@ public class Set {
     @GeneratedValue
     private Long id;
     private String name;
+
+    
 
     @OneToMany(mappedBy = "set")
     private List<Blog> blogs = new ArrayList<>();

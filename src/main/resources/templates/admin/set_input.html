@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="admin/_fragments :: head(~{::title})">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文集发布</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="../../static/css/m.css">
+
+</head>
+<body>
+
+<nav th:replace="admin/_fragments :: menu" class = "ui inverted attached segment">
+    <div class = "ui container">
+        <div class = "ui inverted secondary stackable menu">
+            <h2 class = "ui teal header item">Blog</h2>
+            <a herf = "#" class = "m-hidden-button item m-mobile-hidden"><i class = "home icon"></i>首页</a>
+            <a herf = "#" class = "m-hidden-button item m-mobile-hidden"><i class = "idea icon"></i>文集</a>
+            <a herf = "#" class = "m-hidden-button item m-mobile-hidden"><i class = "tags icon"></i>标签</a>
+
+            <div class="right menu">
+                <div class="ui dropdown item">
+                    <input type="hidden" name="user">
+                    <img src="https://unsplash.it/100/100?image=1005" alt="" class="ui avatar image">Apray
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a href="#" class="item">注销</a>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <a href="#" class="ui menu toggle black icon button m-top-right m-mobile-show">
+        <i class = "sidebar icon"></i>
+    </a>
+
+</nav>
+
+<div class="ui menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="#" class="item">发布</a>
+            <a href="#" class="active item">列表</a>
+        </div>
+    </div>
+</div>
+
+<div class="ui container m-padding-vertical-2 m-padding-horizon-2">
+    <form action="#" method="post" th:object="${set}" th:action="*{id}==null ? @{/admin/sets} : @{/admin/sets/{id}(id=*{id})}" class="ui form">
+
+        <input type="hidden" name="id" th:value="*{id}">
+        <div class="required field">
+            <div class="ui left labeled input">
+                <label class="ui teal basic label">名称</label>
+                <input type="text" name="name" placeholder="文集名称" th:value="*{name}">
+            </div>
+        </div>
+
+
+        <div class="ui error message"></div>
+        <!--/*/
+        <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+            <i class="close icon"></i>
+            <div class="header">失败</div>
+            <p th:errors="*{name}">请输入正确内容</p>
+        </div>
+        /*/-->
+        <div class="ui right aligned container">
+            <button class="ui basic button" onclick="window.history.back()">返回</button>
+            <button class="ui teal submit button">提交</button>
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+</div>
+
+
+
+<footer th:replace="admin/_fragments :: footer" class = "ui inverted vertical segment">
+    <div class = "ui container">
+        <div class = "ui grid">
+            <div class="three wide column">
+                <img src = "https://unsplash.it/300/300?image=1005" class="ui image">
+            </div>
+            <div class="three wide column"></div>
+            <div class="three wide column">
+                <div class = "ui inverted link list">
+                    <div>aaaaa</div>
+                    <div>bbbbb</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<th:block th:replace="admin/_fragments :: script">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+    <script src="../../static/libtocbot/tocbot.min.js"></script>
+
+</th:block>
+
+<script>
+    var contentEditor;
+
+    $(function() {
+        testEditor = editormd("md-content", {
+            width   : "100%",
+            height  : 640,
+            syncScrolling : "single",
+            path    : "../static/lib/mdeditor/lib/"
+        });
+
+        /*
+        // or
+        testEditor = editormd({
+            id      : "test-editormd",
+            width   : "90%",
+            height  : 640,
+            path    : "../lib/"
+        });
+        */
+    });
+    $('.menu.toggle').click(function(){
+        $('.m-hidden-button').toggleClass('m-mobile-hidden');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on : 'hover'
+    });
+    $('.ui.form').form({
+        fields : {
+            title : {
+                identifier: 'name',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入文集名称。'
+                }]
+            }
+        }
+    })
+</script>
+</body>
+</html>
