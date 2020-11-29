@@ -62,15 +62,14 @@
                         <i class="dropdown icon"></i>
                         <div class="default text">文集</div>
                         <div class="menu">
-                            <div class="item" data-value="1">1</div>
-                            <div class="item" data-value="2">2</div>
+                            <div th:each="set: ${sets}"   class="item" data-value="1" th:data-value="${set.id}" th:text="${set.name}">1</div>
                         </div>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="recommend" name="recommend">
-                        <label for="recommend">推荐</label>
+                        <input type="checkbox" id="recommened" name="recommened">
+                        <label for="recommened">推荐</label>
                     </div>
                 </div>
                 <div class="field">
@@ -81,7 +80,7 @@
             </div>
         </div>
 
-        <div id="table-containe">
+        <div id="table-container">
 
             <table th:fragment="blogList" class="ui table">
                 <thead>
@@ -90,6 +89,7 @@
                     <th>标题</th>
                     <th>类型</th>
                     <th>推荐</th>
+                    <th>状态</th>
                     <th>更新时间</th>
                     <th>操作</th>
                 </tr>
@@ -99,22 +99,23 @@
                     <td th:text="${iterStat.count}">1</td>
                     <td th:text="${blog.title}">文章1</td>
                     <td th:text="${blog.set.name}">cs</td>
-                    <td th:text="${blog.recommend} ? '是':'否'">是</td>
+                    <td th:text="${blog.recommened} ? '是':'否'">是</td>
+                    <td th:text="${blog.published} ? '未发布':'发布'">草稿</td>
                     <td th:text="${blog.updateTime}">2000-0-0</td>
                     <td>
-                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${set.id})}" class="ui mini teal basic button">编辑</a>
-                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${set.id})}" class="ui mini red basic button">删除</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
+                        <a href="#" th:href="@{/admin/blogs/{id}/delete(id=${blog.id})}" class="ui mini red basic button">删除</a>
                     </td>
                 </tr>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="6">
+                    <th colspan="7">
                         <div class="ui mini pagination menu" th:if="${page.totalPages} > 1">
-                            <a onclick="page(this)" th:attr="data-page=${page.number} - 1" class="item" th:unless="${page.first}"><<</a>
-                            <a onclick="page(this)" th:attr="data-page=${page.number} + 1" class="item" th:unless="${page.last}">>></a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number} - 1" class="item" th:unless="${page.first}">上一页</a>
+                            <a onclick="page(this)" th:attr="data-page=${page.number} + 1" class="item" th:unless="${page.last}">下一页</a>
                         </div>
-                        <a href="" class="ui right floated teal basic button">新增</a>
+                        <a href="#" th:href="@{/admin//blogs/input}" class="ui right floated teal basic button">新增</a>
                     </th>
                 </tr>
                 </tfoot>
@@ -123,12 +124,23 @@
 
 
             </table>
+            <div class="ui success message" th:unless="${#strings.isEmpty(mesaage)}">
+                <i class="close icon"></i>
+                    <div class="header">提示：</div>
+                    <p th:text="${message}">操作成功。</p>
+            </div>
         </div>
 
 
 
     </div>
 
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 
 
     <footer th:replace="admin/_fragments :: footer" class = "ui inverted vertical segment">
@@ -167,19 +179,25 @@
             on : 'hover'
         });
         function page(obj) {
-            $("[name='page']").val($(obj)).data("page");
+            $("[name='page']").val($(obj).data("page"));
             loaddata();
-        }
+        };
 
-        function loaddata(){
-            $("#table-containe").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
+        $('.message .close').on('click', function (){
+           $(this)
+           .closest('.message')
+           .transition('fade');
+        });
+        function loaddata() {
+            $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
                title: $("[name='title']").val(),
-               setId: $("[name='setid']").val(),
-                recommend: $("[name='recommend']").prop('checked'),
+               setId: $("[name='setId']").val(),
+                recommened: $("[name='recommened']").prop('checked'),
                 page: $("[name='page']").val()
             });
-        }
+        };
         $("#search-btn").click(function (){
+            $("[name='page']").val(0);
            loaddata();
         });
     </script>

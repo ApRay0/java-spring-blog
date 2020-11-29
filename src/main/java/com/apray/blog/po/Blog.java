@@ -44,6 +44,17 @@ public class Blog {
 
     }
 
+    @Transient
+    public String tagIds;
+
+    public String getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(String tagIds) {
+        this.tagIds = tagIds;
+    }
+
     public Long getId() {
         return id;
     }

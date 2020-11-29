@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class SetServiceImpl implements SetService{
@@ -48,6 +49,11 @@ public class SetServiceImpl implements SetService{
     @Override
     public Set getSetByname(String name) {
         return setRepository.findByName(name);
+    }
+
+    @Override
+    public List<Set> listSet() {
+        return setRepository.findAll();
     }
 
     @Transactional

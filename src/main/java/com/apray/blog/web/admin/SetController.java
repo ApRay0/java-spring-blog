@@ -24,7 +24,7 @@ public class SetController {
     private SetService setService;
 
     @GetMapping("/sets")
-    public String sets(@PageableDefault(size = 10, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String sets(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
         model.addAttribute("page", setService.listSet(pageable));
         return "admin/sets";
