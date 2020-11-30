@@ -19,10 +19,13 @@
                 <a herf = "#" class = "m-hidden-button item m-mobile-hidden" th:classappend="${n==3} ? 'active'"><i class = "tags icon"></i>标签</a>
                 <a herf = "#" class = "m-hidden-button item m-mobile-hidden" th:classappend="${n==4} ? 'active'"><i class = "info icon"></i>关于我</a>
                 <div class = "right item m-mobile-hidden">
-                    <div class = "ui icon input">
-                        <input type = "text" placeholder="Search...">
-                        <i class = "search link icon"></i>
-                    </div>
+                    <form name="search" action="#" th:action="@{/search}" method="post" target="_blank">
+                        <div class = "ui icon input">
+                            <input type = "text" name="query" placeholder="Search..." th:value="${query}">
+                            <i onclick="document.forms['search'].submit()" class = "search link icon"></i>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -55,7 +58,6 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script src="../static/libtocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
-    <script src="../static/lib/mdeditor/editormd.min.js" th:src="@{/lib/mdeditor/editormd.min.js"></script>
 
 </th:block>
 

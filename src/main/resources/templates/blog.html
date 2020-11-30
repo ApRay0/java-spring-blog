@@ -41,25 +41,25 @@
         <div class="ui top attached segment mp">
             <div class = "ui horizontal link list">
                 <div class = "item">
-                    <img src="../static/images/866-200x300.jpg" alt="" class = "ui avatar image">
-                    <div class = "content"><a href="#" class="header">Apray</a></div>
+                    <img src="../static/images/866-200x300.jpg" th:src="@{${blog.user.avatar}}" alt="" class = "ui avatar image">
+                    <div class = "content"><a href="#" th:text="${blog.user.nickname}" class="header">Apray</a></div>
                 </div>
                 <div class ="item">
-                    <i class = "calendar icon"></i> 2000-10-10
+                    <i class = "calendar icon" ></i><span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2000-10-10</span>
                 </div>
                 <div class = "item">
-                    <i class = "eye icon"></i> 100
+                    <i class = "eye icon"></i> <span th:text="${blog.views}">100</span>
                 </div>
             </div>
         </div>
         <div class="ui attached segment">
-            <img src="../static/images/866-200x300.jpg" alt="" class="ui fluid image">
+            <img src="../static/images/866-200x300.jpg"  th:src="@{${blog.cover}}" alt="" class="ui fluid image">
         </div>
         <div class="ui attached segment">
-            <h2 class="ui grey header">Head</h2>
+            <h2 class="ui grey header" th:text="${blog.title}">Head</h2>
 
 
-            <div id="content" class="js-toc-content">
+            <div id="content" class="js-toc-content" th:text="${blog.content}">
 
                     <h1>中文网页重设与排版：<i class="serif">Typo.css</i></h1><br>
                     
@@ -441,12 +441,12 @@
         <div class="ui attached segment">
 
             <div>
-                <div class="ui teal basic label">Label</div>
+                <div class="ui teal basic label" th:each="tag : ${blog.tags}" th:text="${tag.name}">Label</div>
             </div>
             <br>
             <ui class="list">
-                <li>作者：</li>
-                <li>简介：</li>
+                <li>作者：<span th:text="${blog.user.nickname}"></span></li>
+                <li>发布时间：<span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd HH:mm')}"></span></li>
             </ui>
             <div class="ui center aligned basic segment">
                 <div class="ui orange basic circular button">赞赏</div>
