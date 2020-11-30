@@ -5,6 +5,7 @@ import com.apray.blog.NotFoundException;
 import com.apray.blog.dao.BlogRepository;
 import com.apray.blog.po.Blog;
 import com.apray.blog.po.Set;
+import com.apray.blog.uitls.MarkdownUtils;
 import com.apray.blog.vo.BlogQuery;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,19 @@ public class BlogServiceImpl implements BlogService{
         Sort sort = Sort.by(Sort.Direction.DESC, "updateTime");
         Pageable pageable = PageRequest.of(0, size, sort);
         return blogRepository.findTop(pageable);
+    }
+
+    @Override
+    public Blog getAndConvert(Long id) {
+        Blog blog = blogRepository.getOne(id);
+        if (blog == null) {
+            throw new NotFoundException("不存在");
+        }
+        Blog b = new Blog();
+        BeanUtils.copyProperties(blog, b);
+        String content = b.getContent();
+        b.setContent(MarkdownUtils.markdownToHtmlExtensions(content));;
+        return b;
     }
 
     @Override

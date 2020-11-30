@@ -59,7 +59,7 @@
             <h2 class="ui grey header" th:text="${blog.title}">Head</h2>
 
 
-            <div id="content" class="js-toc-content" th:text="${blog.content}">
+            <div id="content" class="typo typo-selection js-toc-content" th:utext="${blog.content}">
 
                     <h1>中文网页重设与排版：<i class="serif">Typo.css</i></h1><br>
                     
@@ -433,7 +433,7 @@
                     
                     <p><i class="serif">Typo.css</i> 基于 <a href="https://zh.wikipedia.org/wiki/MIT_License">MIT License</a> 开源，使用代码只需说明来源，或者引用 <a href="https://typo.sofi.sh/license.txt">license.txt</a> 即可。</p>
                     </div>
-        </div>
+            </div>
 
             
 
@@ -599,7 +599,7 @@
     <th:block th:replace="_fragments :: script">
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-        <script src="../static/libtocbot/tocbot.min.js"></script>
+        <script src="../static/lib/tocbot/tocbot.min.js" th:src="@{/lib/tocbot/tocbot.min.js}"></script>
 
     </th:block>
 
