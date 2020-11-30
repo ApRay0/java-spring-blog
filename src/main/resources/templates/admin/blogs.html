@@ -100,7 +100,7 @@
                     <td th:text="${blog.title}">文章1</td>
                     <td th:text="${blog.set.name}">cs</td>
                     <td th:text="${blog.recommened} ? '是':'否'">是</td>
-                    <td th:text="${blog.published} ? '未发布':'发布'">草稿</td>
+                    <td th:text="${blog.published} ? '发布':'未发布'">草稿</td>
                     <td th:text="${blog.updateTime}">2000-0-0</td>
                     <td>
                         <a href="#" th:href="@{/admin/blogs/{id}/input(id=${blog.id})}" class="ui mini teal basic button">编辑</a>
@@ -115,7 +115,7 @@
                             <a onclick="page(this)" th:attr="data-page=${page.number} - 1" class="item" th:unless="${page.first}">上一页</a>
                             <a onclick="page(this)" th:attr="data-page=${page.number} + 1" class="item" th:unless="${page.last}">下一页</a>
                         </div>
-                        <a href="#" th:href="@{/admin//blogs/input}" class="ui right floated teal basic button">新增</a>
+                        <a href="#" th:href="@{/admin//blogs/input}" class="ui right floated small teal button">新增</a>
                     </th>
                 </tr>
                 </tfoot>

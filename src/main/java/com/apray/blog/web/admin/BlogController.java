@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -57,6 +58,28 @@ public class BlogController {
         return INPUT;
     }
 
+    private void setSetAndTag(Model model){
+        model.addAttribute("sets", setService.listSet());
+        model.addAttribute("tags", tagService.listTag());
+    }
+
+    @GetMapping("/blogs/{id}/input")
+    public String editInput(@PathVariable long id, Model model){
+        setSetAndTag(model);
+        Blog blog = blogService.getBlog(id);
+        blog.init();
+        model.addAttribute("blog", blog);
+        return INPUT;
+    }
+
+    @GetMapping("/blogs/{id}/delete")
+    public String delete(@PathVariable Long id, RedirectAttributes attributes){
+        blogService.deleteBlog(id);
+        attributes.addFlashAttribute("message", "删除成功");
+        return R_LIST;
+    }
+
+
     @PostMapping("/blogs")
     public String post(Blog blog, RedirectAttributes attributes, HttpSession session) {
 
@@ -64,7 +87,13 @@ public class BlogController {
         blog.setSet(setService.getSet(blog.getSet().getId()));
         blog.setTags(tagService.listTag(blog.getTagIds()));
 
-        Blog b = blogService.saveBlog(blog);
+        Blog b;
+        if (blog.getId() == null) {
+            b = blogService.saveBlog(blog);
+
+        } else {
+            b = blogService.updateBlog(blog.getId(), blog);
+        }
 
         if (b == null) {
             attributes.addFlashAttribute("message", "操作失败");

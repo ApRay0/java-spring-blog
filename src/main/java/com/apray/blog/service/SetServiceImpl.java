@@ -6,7 +6,9 @@ import com.apray.blog.po.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -44,6 +46,13 @@ public class SetServiceImpl implements SetService{
             throw new NotFoundException("文集不存在。");
         }
         return setRepository.save(s);
+    }
+
+    @Override
+    public List<Set> listSetTop(Integer size) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "blogs.size");
+        Pageable pageable = PageRequest.of(0, size, sort);
+        return setRepository.findTop(pageable);
     }
 
     @Override

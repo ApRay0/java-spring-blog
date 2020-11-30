@@ -16,6 +16,8 @@ public interface SetService {
 
     List<Set> listSet();
 
+    List<Set> listSetTop(Integer size);
+
     Set updateSet(Long id, Set set);
 
     Set getSetByname(String name);
