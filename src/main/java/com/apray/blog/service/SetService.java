@@ -20,7 +20,7 @@ public interface SetService {
 
     Set updateSet(Long id, Set set);
 
-    Set getSetByname(String name);
+    Set getSetByName(String name);
 
     void deleteSet(Long id);
 }

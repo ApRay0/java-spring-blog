@@ -1,7 +1,7 @@
 package com.apray.blog.web.admin;
 
-import com.apray.blog.po.Set;
-import com.apray.blog.service.SetService;
+import com.apray.blog.po.Tag;
+import com.apray.blog.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,24 +20,24 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TagController {
 
     @Autowired
-    private SetService tagService;
+    private TagService tagService;
 
     @GetMapping("/tags")
     public String tags(@PageableDefault(size = 5, sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable,
                        Model model){
-        model.addAttribute("page", tagService.listSet(pageable));
+        model.addAttribute("page", tagService.listTag(pageable));
         return "admin/tags";
     }
 
     @GetMapping("/tags/input")
     public String input(Model model){
-        model.addAttribute("tag", new Set());
+        model.addAttribute("tag", new Tag());
         return "admin/tag_input";
     }
 
     @GetMapping("/tags/{id}/input")
     public String editInput(@PathVariable  Long id, Model model){
-        model.addAttribute("tag", tagService.getSet(id));
+        model.addAttribute("tag", tagService.getTag(id));
         return "admin/tag_input";
     }
 
@@ -45,15 +45,15 @@ public class TagController {
 
 
     @PostMapping("/tags")
-    public String post(Set tag, BindingResult result, RedirectAttributes attributes){
-        Set s1 = tagService.getSetByname(tag.getName());
-        if (s1 != null) {
+    public String post(Tag tag, BindingResult result, RedirectAttributes attributes){
+        Tag t1 = tagService.getTagByName(tag.getName());
+        if (t1 != null) {
             result.rejectValue("name", "nameError", "文集已存在。");
         }
         if (result.hasErrors()) {
             return "admin/tag_input";
         }
-        Set s = tagService.saveSet(tag);
+        Tag s = tagService.saveTag(tag);
         if (s == null) {
             attributes.addFlashAttribute("message", "操作失败");
         } else {
@@ -64,15 +64,15 @@ public class TagController {
     }
 
     @PostMapping("/tags/{id}")
-    public String edit(Set tag, BindingResult result,@PathVariable Long id, RedirectAttributes attributes){
-        Set s1 = tagService.getSetByname(tag.getName());
+    public String edit(Tag tag, BindingResult result,@PathVariable Long id, RedirectAttributes attributes){
+        Tag s1 = tagService.getTagByName(tag.getName());
         if (s1 != null) {
             result.rejectValue("name", "nameError", "文集已存在。");
         }
         if (result.hasErrors()) {
             return "admin/tag_input";
         }
-        Set s = tagService.updateSet(id, tag);
+        Tag s = tagService.updateTag(id, tag);
         if (s == null) {
             attributes.addFlashAttribute("message", "更新失败");
         } else {
@@ -85,7 +85,7 @@ public class TagController {
     @GetMapping("/tags/{id}/delete")
     public String delete(@PathVariable Long id, RedirectAttributes attributes){
 
-        tagService.deleteSet(id);
+        tagService.deleteTag(id);
         attributes.addFlashAttribute("message", "删除成功");
         return "redirect:/admin/tags";
     }

@@ -49,8 +49,8 @@
                             <div class = "ui middel aligned mobile reversed stackable grid">
                                 <div class="eleven wide column">
 
-                                    <h3 class ="ui header"><a href="#" class="" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">hhhhead</a></h3>
-                                    <p>contenaaaaaa</p>
+                                    <h3 class ="ui header"><a href="#" class="" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">Head</a></h3>
+                                    <div id="content" class="typo typo-selection js-toc-content" th:utext="${#strings.length(blog.content)} > 100 ? ${#strings.substring(blog.content,0, 100)} + '...' : ${blog.content}"></div>
 
 
 

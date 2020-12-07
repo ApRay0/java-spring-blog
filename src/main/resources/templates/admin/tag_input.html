@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="admin/_fragments :: head(~{::title})">
-    <meta charset="UTF-8">
+    <meta chartag="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文集发布</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
@@ -49,13 +49,13 @@
 </div>
 
 <div class="ui container m-padding-vertical-2 m-padding-horizon-2">
-    <form action="#" method="post" th:object="${set}" th:action="*{id}==null ? @{/admin/sets} : @{/admin/sets/{id}(id=*{id})}" class="ui form">
+    <form action="#" method="post" th:object="${tag}" th:action="*{id}==null ? @{/admin/tags} : @{/admin/tags/{id}(id=*{id})}" class="ui form">
 
         <input type="hidden" name="id" th:value="*{id}">
         <div class="required field">
             <div class="ui left labeled input">
                 <label class="ui teal basic label">名称</label>
-                <input type="text" name="name" placeholder="文集名称" th:value="*{name}">
+                <input type="text" name="name" placeholder="标签名称" th:value="*{name}">
             </div>
         </div>
 
@@ -69,19 +69,20 @@
         </div>
         /*/-->
         <div class="ui right aligned container">
-            <button class="ui basic button"><a href="#" th:href="@{/admin/sets}">返回</a></button>
+            <button class="ui basic button"><a href="#" th:href="@{/admin/tags}">返回</a></button>
             <button class="ui teal submit button">提交</button>
         </div>
     </form>
     <br>
 
+    <br>
 
 
 </div>
 
 
 
-<footer th:replace="admin/_fragments :: footer" class = "ui inverted vertical segment">
+<footer class = "ui inverted vertical segment" style="position:fixed; bottom:0px;width: 100%;">
     <div class = "ui container">
         <div class = "ui grid">
             <div class="three wide column">
@@ -90,8 +91,8 @@
             <div class="three wide column"></div>
             <div class="three wide column">
                 <div class = "ui inverted link list">
-                    <div>aaaaa</div>
-                    <div>bbbbb</div>
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
         </div>

@@ -47,7 +47,7 @@ public class SetController {
 
     @PostMapping("/sets")
     public String post(Set set, BindingResult result, RedirectAttributes attributes){
-        Set s1 = setService.getSetByname(set.getName());
+        Set s1 = setService.getSetByName(set.getName());
         if (s1 != null) {
             result.rejectValue("name", "nameError", "文集已存在。");
         }
@@ -66,7 +66,7 @@ public class SetController {
 
     @PostMapping("/sets/{id}")
     public String edit(Set set, BindingResult result,@PathVariable Long id, RedirectAttributes attributes){
-        Set s1 = setService.getSetByname(set.getName());
+        Set s1 = setService.getSetByName(set.getName());
         if (s1 != null) {
             result.rejectValue("name", "nameError", "文集已存在。");
         }

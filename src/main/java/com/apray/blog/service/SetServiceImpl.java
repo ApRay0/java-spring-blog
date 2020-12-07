@@ -3,6 +3,7 @@ package com.apray.blog.service;
 import com.apray.blog.NotFoundException;
 import com.apray.blog.dao.SetRepository;
 import com.apray.blog.po.Set;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.data.domain.Page;
@@ -45,6 +46,7 @@ public class SetServiceImpl implements SetService{
         if (s == null) {
             throw new NotFoundException("文集不存在。");
         }
+        BeanUtils.copyProperties(set, s);
         return setRepository.save(s);
     }
 
@@ -56,7 +58,7 @@ public class SetServiceImpl implements SetService{
     }
 
     @Override
-    public Set getSetByname(String name) {
+    public Set getSetByName(String name) {
         return setRepository.findByName(name);
     }
 

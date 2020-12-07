@@ -36,7 +36,7 @@ public class BlogController {
     private SetService setService;
 
     @GetMapping("/blogs")
-    public String blogs(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String blogs(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                         BlogQuery blog,  Model model){
         model.addAttribute("sets", setService.listSet());
         model.addAttribute("page", blogService.listBlog(pageable, blog));
@@ -44,7 +44,7 @@ public class BlogController {
     }
 
     @PostMapping("/blogs/search")
-    public String search(@PageableDefault(size = 2, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
+    public String search(@PageableDefault(size = 5, sort = {"updateTime"}, direction = Sort.Direction.DESC) Pageable pageable,
                          BlogQuery blog, Model model){
         model.addAttribute("page", blogService.listBlog(pageable, blog));
         return "admin/blogs :: blogList";
