@@ -40,52 +40,54 @@
         </div>
 
         <div class="ui attached segment">
-            <div class="ui labeled button ">
-                <a href="#" class="ui basic teal button">T1</a>
-                <div class="ui basic teal label">11</div>
-            </div>
-            <div class="ui labeled button">
-                <a href="#" class="ui basic  button">T12</a>
-                <div class="ui basic label">11</div>
-            </div>
-            <div class="ui labeled button">
-                <a href="#" class="ui basic  button">T3</a>
-                <div class="ui basic label">131</div>
+            <div class="ui labeled button" th:each="tag : ${tags}">
+                <a href="#" th:href="@{/tag/{id}(id=${tag.id})}" class="ui basic button" th:classappend="${tag.id==activeTagId} ? 'teal'" th:text="${tag.name}">T1</a>
+                <div class="ui basic label" th:classappend="${tag.id==activeTagId} ? 'teal'" th:text="${#arrays.length(tag.blogs)}">11</div>
             </div>
         </div>
 
         <div class="ui segment">
             <div class ="ui padded vertical segment">
-                <div class = "ui mobile reversed stackable grid">
-                    <div class="eleven wide column">
+                <div class ="ui padded  vertical segment" th:each="blog : ${page.content}">
+                    <div class = "ui middel aligned mobile reversed stackable grid">
+                        <div class="eleven wide column">
 
-                        <h3 class ="ui header">hhhhead</h3>
-                        <p>contenaaaaaa</p>
+                            <h3 class ="ui header"><a href="#" class="" th:text="${blog.title}" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">hhhhead</a></h3>
+                            <p>contenaaaaaa</p>
 
 
+
+                        </div>
+
+
+                        <div class ="five wide column">
+                            <a href="#" target="_blank" th:href="@{/blog/{id}(id=${blog.id})}">
+                                <img src="https://unsplash.it/300/300?image=1005" th:src="@{${blog.cover}}" alt="" class="ui rounded image">
+                            </a>
+                        </div>
+
+                        <div class = "ui horizontal link list">
+                            <div class = "item">
+                                <img src="https://unsplash.it/100/100?image=1005" th:src="@{${blog.user.avatar}}" alt="" class = "ui avatar image">
+                                <div class = "content"><a href="#" class="header" th:text="${blog.user.nickname}" >Apray</a></div>
+                            </div>
+                            <div class ="item">
+                                <i class = "calendar icon"></i><span th:text="${#dates.format(blog.updateTime, 'yyyy-MM-dd')}">2000-10-10</span>
+                            </div>
+                            <div class = "item">
+                                <i class = "eye icon"></i><span th:text="${blog.views}">100</span>
+                            </div>
+                        </div>
 
                     </div>
-
-
-                    <div class ="five wide column">
-                        <a href="#" target="_blank">
-                            <img src="https://unsplash.it/300/300?image=1005" alt="" class="ui rounded image">
-                        </a>
+                </div>
+            </div>
+            <div class="ui bottom attached segment" th:if="${page.totalPages} > 1">
+                <div class = "m-padding-vertical-d5">
+                    <div class="ui centered grid"  >
+                        <a href="#" th:attr="@{/(page = ${page.number} - 1)}" th:unless="${page.first}" class = "ui teal basic button">上一页</a>
+                        <a href="#" th:attr="@{/(page = ${page.number} + 1)}" th:unless="${page.last}" class = "ui teal basic button">下一页</a>
                     </div>
-
-                    <div class = "ui horizontal link list">
-                        <div class = "item">
-                            <img src="https://unsplash.it/100/100?image=1005" alt="" class = "ui avatar image">
-                            <div class = "content"><a href="#" class="header">Apray</a></div>
-                        </div>
-                        <div class ="item">
-                            <i class = "calendar icon"></i> 2000-10-10
-                        </div>
-                        <div class = "item">
-                            <i class = "eye icon"></i> 100
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>
@@ -93,7 +95,7 @@
 
 
 
-    <footer class = "ui inverted vertical segment">
+    <footer th:replace="_fragments :: footer" class = "ui inverted vertical segment">
         <div class = "ui container">
             <div class = "ui grid">
                 <div class="three wide column">

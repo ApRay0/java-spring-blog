@@ -107,10 +107,10 @@
 
                             <div class="ui two column grid">
                                 <div class="column">
-                                    <i class="idea icon"></i>专题
+                                    <i class="idea icon"></i>文集
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="">more<i class = "angle double right icon"></i></a>
+                                    <a href="#">更多<i class = "angle double right icon"></i></a>
                                 </div>
                             </div>
 
@@ -118,7 +118,7 @@
                         </div>
                         <div class ="ui segment">
                                 <div class="ui fluid vertical menu">
-                                    <a href="" class="item" th:each="set:${sets}">
+                                    <a href="#" th:href="@{/set/{id}(id=${set.id})}" class="item" th:each="set:${sets}">
                                         <span th:text="${set.name}">A</span>
                                         <div class="ui teal basic left pointing label" th:text="${#arrays.length(set.blogs)}">1</div>
                                     </a>
@@ -135,7 +135,7 @@
                                     <i class="tags icon"></i>标签
                                 </div>
                                 <div class="right aligned column">
-                                    <a href="">more<i class = "angle double right icon"></i></a>
+                                    <a href="#">更多<i class = "angle double right icon"></i></a>
                                 </div>
                             </div>
 
@@ -143,7 +143,7 @@
                         </div>
                         <div class ="ui segment">
                                 <div class="ui fluid vertical menu" >
-                                    <a href="" class="item" th:each="tag : ${tags}">
+                                    <a href="#" th:href="@{/tag/{id}(id=${tag.id})}" class="item" th:each="tag : ${tags}">
                                         <span th:text="${tag.name}">A</span>
                                         <div class="ui teal basic left pointing label" th:text="${#arrays.length(tag.blogs)}">1</div>
                                     </a>
@@ -156,7 +156,7 @@
     </div>
     <br>
 
-    <footer class = "ui inverted vertical segment">
+    <footer th:replace="_fragments :: footer" class = "ui inverted vertical segment">
         <div class = "ui container">
             <div class = "ui grid">
                 <div class="three wide column">
